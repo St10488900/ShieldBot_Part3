@@ -1,0 +1,205 @@
+<Application x:Class="CyberAwarenessBot.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+
+        <!-- ════ DESIGN TOKENS — ChatGPT-inspired dark sidebar + clean main ════ -->
+
+        <!-- Sidebar (dark) -->
+        <SolidColorBrush x:Key="SidebarBg"        Color="#171717"/>
+        <SolidColorBrush x:Key="SidebarHover"     Color="#2A2A2A"/>
+        <SolidColorBrush x:Key="SidebarActive"    Color="#333333"/>
+        <SolidColorBrush x:Key="SidebarBorder"    Color="#2D2D2D"/>
+        <SolidColorBrush x:Key="SidebarText"      Color="#ECECEC"/>
+        <SolidColorBrush x:Key="SidebarMuted"     Color="#8E8E8E"/>
+
+        <!-- Main area -->
+        <SolidColorBrush x:Key="MainBg"           Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="InputAreaBg"      Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="InputBorder"      Color="#E5E5E5"/>
+
+        <!-- Chat bubbles -->
+        <SolidColorBrush x:Key="UserBubbleBg"     Color="#F4F4F4"/>
+        <SolidColorBrush x:Key="BotBubbleBg"      Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TextMain"         Color="#0D0D0D"/>
+        <SolidColorBrush x:Key="TextMuted"        Color="#6B6B6B"/>
+        <SolidColorBrush x:Key="Divider"          Color="#E5E5E5"/>
+
+        <!-- Accent -->
+        <SolidColorBrush x:Key="AccentGreen"      Color="#10A37F"/>
+        <SolidColorBrush x:Key="AccentGreenHover" Color="#0D8C6C"/>
+        <SolidColorBrush x:Key="AccentBlue"       Color="#2563EB"/>
+        <SolidColorBrush x:Key="AccentRed"        Color="#EF4444"/>
+        <SolidColorBrush x:Key="AccentAmber"      Color="#D97706"/>
+
+        <!-- Panel / card -->
+        <SolidColorBrush x:Key="CardBg"           Color="#F9F9F9"/>
+        <SolidColorBrush x:Key="CardBorder"       Color="#E5E5E5"/>
+
+        <!-- ════ SIDEBAR NAV BUTTON ════ -->
+        <Style x:Key="NavButton" TargetType="Button">
+            <Setter Property="Background"           Value="Transparent"/>
+            <Setter Property="Foreground"           Value="{StaticResource SidebarText}"/>
+            <Setter Property="FontFamily"           Value="Segoe UI"/>
+            <Setter Property="FontSize"             Value="13.5"/>
+            <Setter Property="BorderThickness"      Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding"              Value="12,10"/>
+            <Setter Property="Cursor"               Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bg"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bg" Property="Background" Value="{StaticResource SidebarHover}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bg" Property="Background" Value="{StaticResource SidebarActive}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="NavButtonActive" TargetType="Button" BasedOn="{StaticResource NavButton}">
+            <Setter Property="Background" Value="{StaticResource SidebarActive}"/>
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+        </Style>
+
+        <!-- ════ TOPIC CHIP ════ -->
+        <Style x:Key="TopicChip" TargetType="Button">
+            <Setter Property="Background"           Value="Transparent"/>
+            <Setter Property="Foreground"           Value="{StaticResource SidebarMuted}"/>
+            <Setter Property="FontFamily"           Value="Segoe UI"/>
+            <Setter Property="FontSize"             Value="12"/>
+            <Setter Property="BorderThickness"      Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding"              Value="12,7"/>
+            <Setter Property="Cursor"               Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bg" Background="{TemplateBinding Background}"
+                                CornerRadius="5" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bg" Property="Background" Value="{StaticResource SidebarHover}"/>
+                                <Setter Property="Foreground" Value="{StaticResource SidebarText}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ════ PRIMARY GREEN BUTTON (Send / Submit) ════ -->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background"      Value="{StaticResource AccentGreen}"/>
+            <Setter Property="Foreground"      Value="White"/>
+            <Setter Property="FontFamily"      Value="Segoe UI Semibold"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding"         Value="20,10"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bg" Background="{TemplateBinding Background}"
+                                CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bg" Property="Background" Value="{StaticResource AccentGreenHover}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bg" Property="Background" Value="#0A7260"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ════ SECONDARY BUTTON ════ -->
+        <Style x:Key="SecondaryButton" TargetType="Button">
+            <Setter Property="Background"      Value="#F4F4F4"/>
+            <Setter Property="Foreground"      Value="{StaticResource TextMain}"/>
+            <Setter Property="FontFamily"      Value="Segoe UI"/>
+            <Setter Property="FontSize"        Value="12.5"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource CardBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding"         Value="14,8"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bg" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="7" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bg" Property="Background" Value="#EBEBEB"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Danger variant -->
+        <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
+            <Setter Property="Foreground"  Value="{StaticResource AccentRed}"/>
+            <Setter Property="BorderBrush" Value="#FECACA"/>
+        </Style>
+
+        <!-- ════ TEXT INPUT ════ -->
+        <Style x:Key="ChatInput" TargetType="TextBox">
+            <Setter Property="Background"      Value="White"/>
+            <Setter Property="Foreground"      Value="{StaticResource TextMain}"/>
+            <Setter Property="CaretBrush"      Value="{StaticResource AccentGreen}"/>
+            <Setter Property="FontFamily"      Value="Segoe UI"/>
+            <Setter Property="FontSize"        Value="14"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource InputBorder}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="Padding"         Value="14,11"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource AccentGreen}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Plain input for panels -->
+        <Style x:Key="PanelInput" TargetType="TextBox" BasedOn="{StaticResource ChatInput}">
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="Padding"         Value="12,9"/>
+        </Style>
+
+    </Application.Resources>
+</Application>
